@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import BlogItem from './BlogItem'
 import { blog_data } from '@/Assets/assets'
+import axios from 'axios'
 
 const BlogList = () => {
 
     const [menu,setMenu] = useState('All')
+    cpnst [blogs,setBlogs] = useState([])
+
+    const fetchBlogs = async () =>{
+      const response = await axios.get('/api/blog')
+    }
   return (
     <div>
         <div className='flex justify-center gap-6 my-10'>

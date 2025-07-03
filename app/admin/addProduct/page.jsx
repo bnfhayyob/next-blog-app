@@ -34,10 +34,19 @@ const page = () => {
         formData.append('image',image)
 
         const response = await axios.post('/api/blog',formData)
-        if(response.data.success){
-            toast.success(response.data.msg)
-        }else{
-            toast.error("Error")
+        // Check for common variations
+        if (response.data.success || response.data.status === 'success' || response.status === 200) {
+            toast.success(response.data.msg || response.data.message || "Success!")
+            setImage(false)
+            setData({
+                title:"",
+                description:"",
+                category:"Startup",
+                author:"Alex Bennett",
+                authorImg:"/author_img.png"
+            })
+        } else {
+            toast.error(response.data.msg || response.data.message || "Error")
         }
     }
 
