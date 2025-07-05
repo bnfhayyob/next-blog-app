@@ -38,7 +38,7 @@ const page = () => {
     </div>
     <div className='mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10'>
         <Image className='border-4 border-white' src={data.image} width={1280} height={720} alt=''/>
-        <p>{data.description}</p>
+        <div className='blog-content' dangerouslySetInnerHTML={{__html:data.description}}></div>
             <div className='my-24'>
             <p className='text-black font-semibold my-4'>Share this Article on Social Media</p>
             <div className='flex'>
