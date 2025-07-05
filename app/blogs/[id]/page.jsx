@@ -38,21 +38,8 @@ const page = () => {
     </div>
     <div className='mx-5 max-w-[800px] md:mx-auto mt-[-100px] mb-10'>
         <Image className='border-4 border-white' src={data.image} width={1280} height={720} alt=''/>
-        <h1 className='my-8 text-[26px] font-semibold'>Intoduction:</h1>
         <p>{data.description}</p>
-        <h3 className='my-5 text-[18px] font-semibold'>Step1: Self-Reflextion and Goal Setting</h3>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <h3 className='my-5 text-[18px] font-semibold'>Step2: Self-Reflextion and Goal Setting</h3>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <h3 className='my-5 text-[18px] font-semibold'>Step3: Self-Reflextion and Goal Setting</h3>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <h3 className='my-5 text-[18px] font-semibold'>Conclusion:</h3>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <p className='my-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quidem ea amet blanditiis sed. Consequatur consequuntur debitis nesciunt alias eaque iusto culpa molestias ducimus perferendis! Modi voluptatem beatae quia veniam?</p>
-        <div className='my-24'>
+            <div className='my-24'>
             <p className='text-black font-semibold my-4'>Share this Article on Social Media</p>
             <div className='flex'>
                 <Image src={assets.facebook_icon} width={50} alt=''/>
