@@ -66,7 +66,7 @@ const Header = () => {
         </div>
         <div className='text-center my-8'>
             <h1 className='text-3xl sm:text-5xl font-medium'>Latest Blogs</h1>
-            <p className='mt-10 max-w-[740px] m-auto text-xs sm:text-base'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus porro recusandae omnis delectus animi perferendis dolores illum amet quod, nostrum voluptatem, officiis repudiandae quas rerum natus velit, numquam eaque saepe!</p>
+            <p className='mt-10 max-w-[740px] m-auto text-xs sm:text-base'>Managing your lifestyle is not about perfection or strict rules. It’s about building balance, clarity, and habits that help you live better—physically, mentally, and emotionally. This guide will walk you step by step toward a more organized, intentional, and fulfilling life.</p>
             <form
               ref={subscribeFormRef}
               onSubmit={onSubmitHandler}
