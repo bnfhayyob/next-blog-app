@@ -6,22 +6,58 @@ import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
 import Footer from '@/Components/Footer';
+import { toast } from 'react-toastify';
 
 const page = () => {
 
     const [data,setData] = useState(null)
+    const [loading,setLoading] = useState(true)
+    const [error,setError] = useState(null)
     const params = useParams()
     const id = params.id
 
-    const fetchBlogData = async () =>{
-        const response = await axios.get('/api/blog',{params:{id:id}})
-        setData(response.data.blog)
+    const fetchBlogData = async () => {
+        try {
+            setLoading(true)
+            setError(null)
+            const response = await axios.get('/api/blog',{params:{id:id}})
+            if(response.data.success === false){
+                setError(response.data.msg || "Blog not found")
+                toast.error(response.data.msg || "Blog not found")
+            } else {
+                setData(response.data.blog)
+            }
+        } catch (error) {
+            console.error("Error fetching blog:", error)
+            const errorMsg = error.response?.data?.msg || "Failed to load blog. Please try again."
+            setError(errorMsg)
+            toast.error(errorMsg)
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(()=>{
         fetchBlogData()
     },[])
     
+  if(loading){
+    return (
+      <div className='min-h-screen flex items-center justify-center'>
+        <p className='text-xl text-gray-600'>Loading blog...</p>
+      </div>
+    )
+  }
+
+  if(error){
+    return (
+      <div className='min-h-screen flex flex-col items-center justify-center'>
+        <p className='text-xl text-red-600 mb-4'>{error}</p>
+        <Link href='/' className='text-blue-600 underline'>Go back to home</Link>
+      </div>
+    )
+  }
+
   return (data?<>
     <div className='bg-gray-200 py-5 px-5 md:px-12 lg:px-28'>
         <div className='flex justify-between items-center'>
