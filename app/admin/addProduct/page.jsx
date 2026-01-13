@@ -4,6 +4,9 @@ import axios from 'axios'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import dynamic from 'next/dynamic'
+
+const Editor = dynamic(() => import('@/Components/Editor'), { ssr: false })
 
 const page = () => {
 
@@ -22,6 +25,10 @@ const page = () => {
         const value = event.target.value
         setData(data=>({...data,[name]:value}))
         console.log(data)
+    }
+
+    const onEditorChange = (content) => {
+        setData(data=>({...data, description: content}))
     }
 
     const onSubmitHandler = async (e) => {
@@ -104,7 +111,13 @@ const page = () => {
             <input name='title' onChange={onchangeHandler} value={data.title} className='w-full sm:w-[500px] mt-4 px-4 py-3 border focus:border-black outline-none' type="text" placeholder='Enter blog title (min 5 characters)..' required minLength={5}/>
 
             <p className='text-xl mt-4'>Blog Description <span className='text-red-500'>*</span></p>
-            <textarea name='description' onChange={onchangeHandler} value={data.description} className='w-full sm:w-[500px] mt-4 px-4 py-3 border focus:border-black outline-none' placeholder='Write content here (min 50 characters)..' rows={14} required minLength={50}/>
+            <div className='mt-4 w-full'>
+                <Editor
+                    value={data.description}
+                    onChange={onEditorChange}
+                    placeholder='Write your blog content here (min 50 characters)...'
+                />
+            </div>
 
             <p className='text-xl mt-4'>Author Name <span className='text-red-500'>*</span></p>
             <input name='author' onChange={onchangeHandler} value={data.author} className='w-full sm:w-[500px] mt-4 px-4 py-3 border focus:border-black outline-none' type="text" placeholder='Enter author name..' required/>
