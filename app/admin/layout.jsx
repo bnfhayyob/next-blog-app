@@ -10,20 +10,19 @@ import { checkAuth, logout } from "@/lib/auth/checkAuth";
 export default function Layout({children}){
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+    const [isLoginPage, setIsLoginPage] = useState(false)
 
     useEffect(() => {
         // Check if we're on the login page
-        const isLoginPage = window.location.pathname === '/admin/login'
+        const loginPage = window.location.pathname === '/admin/login'
+        setIsLoginPage(loginPage)
 
-        if(!checkAuth() && !isLoginPage){
+        if(!checkAuth() && !loginPage){
             window.location.href = '/admin/login'
         } else {
             setIsLoading(false)
         }
     }, [])
-
-    // Simple check for login page
-    const isLoginPage = typeof window !== 'undefined' && window.location.pathname === '/admin/login'
 
     if(isLoginPage){
         return children
