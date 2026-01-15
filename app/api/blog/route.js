@@ -41,34 +41,42 @@ export async function POST(request) {
         const timestamp = Date.now()
 
         const image = formData.get('image')
+        const imageUrl = formData.get('imageUrl')
 
-        if(!image){
-            return NextResponse.json({success: false, msg: "Image is required"}, {status: 400})
+        let imgUrl = ''
+
+        // Check if using URL or file upload
+        if(imageUrl && imageUrl.trim() !== ''){
+            // Using external image URL
+            imgUrl = imageUrl.trim()
+        } else if(image && image.size > 0){
+            // Using file upload
+            // Validate image type
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+            if(!validTypes.includes(image.type)){
+                return NextResponse.json({success: false, msg: "Invalid image type. Only JPEG, PNG, and WebP are allowed"}, {status: 400})
+            }
+
+            // Validate image size (max 5MB)
+            if(image.size > 5 * 1024 * 1024){
+                return NextResponse.json({success: false, msg: "Image size must be less than 5MB"}, {status: 400})
+            }
+
+            const imageByteData = await image.arrayBuffer()
+            const buffer = Buffer.from(imageByteData)
+            const path = `./public/${timestamp}_${image.name}`
+            await writeFile(path,buffer)
+            imgUrl = `/${timestamp}_${image.name}`
+        } else {
+            return NextResponse.json({success: false, msg: "Image is required (either upload or URL)"}, {status: 400})
         }
-
-        // Validate image type
-        const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
-        if(!validTypes.includes(image.type)){
-            return NextResponse.json({success: false, msg: "Invalid image type. Only JPEG, PNG, and WebP are allowed"}, {status: 400})
-        }
-
-        // Validate image size (max 5MB)
-        if(image.size > 5 * 1024 * 1024){
-            return NextResponse.json({success: false, msg: "Image size must be less than 5MB"}, {status: 400})
-        }
-
-        const imageByteData = await image.arrayBuffer()
-        const buffer = Buffer.from(imageByteData)
-        const path = `./public/${timestamp}_${image.name}`
-        await writeFile(path,buffer)
-        const imgUrl = `/${timestamp}_${image.name}`
 
         const blogData = {
             title: `${formData.get('title')}`,
             description: `${formData.get('description')}`,
             category: `${formData.get('category')}`,
             author: `${formData.get('author')}`,
-            image:`${(imgUrl)}`,
+            image: imgUrl,
             authorImg: `${formData.get('authorImg')}`
         }
 
@@ -96,10 +104,12 @@ export async function DELETE(request) {
             return NextResponse.json({success: false, msg: "Blog not found"}, {status: 404})
         }
 
-        // Delete image file
-        fs.unlink(`./public${blog.image}`, (err) => {
-            if(err) console.error("Error deleting image:", err)
-        })
+        // Delete image file only if it's a local file (not external URL)
+        if(blog.image && !blog.image.startsWith('http')){
+            fs.unlink(`./public${blog.image}`, (err) => {
+                if(err) console.error("Error deleting image:", err)
+            })
+        }
 
         await BlogModel.findByIdAndDelete(id)
 
